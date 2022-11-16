@@ -30,7 +30,7 @@ describe('application schematic', () => {
 
     expect(config.root).toBe('apps/my-app');
     expect(config.sourceRoot).toBe('apps/my-app/src');
-    expect(config.targets?.build.executor).toBe('@nx-plus/vue:browser');
+    expect(config.targets?.build.executor).toBe('@nx-vue/vue:browser');
     expect(config.targets?.build.options).toEqual({
       dest: 'dist/apps/my-app',
       index: 'apps/my-app/public/index.html',
@@ -46,7 +46,7 @@ describe('application schematic', () => {
         sourceMap: false,
       },
     });
-    expect(config.targets?.serve.executor).toBe('@nx-plus/vue:dev-server');
+    expect(config.targets?.serve.executor).toBe('@nx-vue/vue:dev-server');
     expect(config.targets?.serve.options).toEqual({
       browserTarget: 'my-app:build',
     });
@@ -127,7 +127,7 @@ a {
     await applicationGenerator(appTree, options);
 
     expect(readJson(appTree, 'package.json').scripts.postinstall).toBe(
-      'node node_modules/@nx-plus/vue/patch-nx-dep-graph.js'
+      'node node_modules/@nx-vue/vue/patch-nx-dep-graph.js'
     );
   });
 

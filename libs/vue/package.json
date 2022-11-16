@@ -1,5 +1,5 @@
 {
-  "name": "@nx-plus/vue",
+  "name": "@nx-vue/vue",
   "version": "14.1.0",
   "main": "src/index.js",
   "generators": "./generators.json",
@@ -7,7 +7,7 @@
   "description": "Vue plugin for Nx",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ZachJW34/nx-plus.git"
+    "url": "git+https://github.com/agmonks/nx-vue.git"
   },
   "keywords": [
     "nx",
@@ -17,15 +17,16 @@
     "cypress",
     "monorepo"
   ],
-  "author": "Bucky Maler <maler.bucky@gmail.com> (http://buckymaler.com/)",
+  "author": "Andrew Monks (https://github.com/agmonks)",
   "contributors": [
+    "Bucky Maler <maler.bucky@gmail.com> (http://buckymaler.com/)",
     "Zachary Williams <zachjw34@gmail.com> (https://github.com/ZachJW34/)"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ZachJW34/nx-plus/issues"
+    "url": "https://github.com/agmonks/nx-vue/issues"
   },
-  "homepage": "https://github.com/ZachJW34/nx-plus/tree/master/libs/vue#readme",
+  "homepage": "https://github.com/agmonks/nx-vue",
   "peerDependencies": {
     "@nrwl/cypress": "^14.3.6",
     "@nrwl/jest": "^14.3.6",

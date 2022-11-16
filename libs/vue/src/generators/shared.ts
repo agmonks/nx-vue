@@ -191,7 +191,7 @@ export async function addEsLint(tree: Tree, options: Options) {
 export function addPostInstall(tree: Tree) {
   return updateJson(tree, 'package.json', (json) => {
     const vuePostInstall =
-      'node node_modules/@nx-plus/vue/patch-nx-dep-graph.js';
+      'node node_modules/@nx-vue/vue/patch-nx-dep-graph.js';
     const { postinstall } = json.scripts || {};
     if (postinstall) {
       if (postinstall !== vuePostInstall) {

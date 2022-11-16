@@ -141,7 +141,7 @@ ${unmetPeerDeps
   .join()
   .split(',')
   .join('')}
-@nx-plus/vite may not work as expected.
+@nx-vue/vite may not work as expected.
     `);
   }
 }

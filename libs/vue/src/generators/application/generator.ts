@@ -110,7 +110,7 @@ export async function applicationGenerator(
     sourceRoot: `${options.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nx-plus/vue:browser',
+        executor: '@nx-vue/vue:browser',
         options: {
           dest: `dist/${options.projectRoot}`,
           index: `${options.projectRoot}/public/index.html`,
@@ -130,7 +130,7 @@ export async function applicationGenerator(
         },
       },
       serve: {
-        executor: '@nx-plus/vue:dev-server',
+        executor: '@nx-vue/vue:dev-server',
         options: {
           browserTarget: `${options.projectName}:build`,
         },

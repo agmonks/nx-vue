@@ -36,8 +36,8 @@
     "types": ["webpack-env"],
     "paths": {
       "@/*": ["apps/*"],
-      "@nx-plus/shared/testing": ["libs/shared/testing/src/index.ts"],
-      "@nx-plus/vue": ["libs/vue/src/index.ts"]
+      "@nx-vue/shared/testing": ["libs/shared/testing/src/index.ts"],
+      "@nx-vue/vue": ["libs/vue/src/index.ts"]
     }
   },
   "include": [

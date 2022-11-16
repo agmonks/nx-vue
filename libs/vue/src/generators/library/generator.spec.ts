@@ -74,7 +74,7 @@ describe('library schematic', () => {
       const workspaceJson = readJson(appTree, 'workspace.json');
       const { build } = workspaceJson.projects['my-lib'].architect;
 
-      expect(build.builder).toBe('@nx-plus/vue:library');
+      expect(build.builder).toBe('@nx-vue/vue:library');
       expect(build.options).toEqual({
         dest: `dist/libs/my-lib`,
         entry: `libs/my-lib/src/index.ts`,

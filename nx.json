@@ -1,5 +1,5 @@
 {
-  "npmScope": "nx-plus",
+  "npmScope": "nx-vue",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
