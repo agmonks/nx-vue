@@ -28,4 +28,4 @@ jobs:
         cache: 'npm'
     - run: yarn
     - run: yarn nx run-many --target build --all
-    - run: yarn nx run-many --target test --all
+    - run: yarn nx run-many --target test --all -u
