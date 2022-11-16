@@ -1,5 +1,5 @@
 import { readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { createTreeWithEmptyV1Workspace } from '@nrwl/devkit/testing';
 import { join } from 'path';
 import { applicationGenerator } from './generator';
 import { ApplicationGeneratorSchema } from './schema';
@@ -57,7 +57,7 @@ describe('nuxt schematic', () => {
   });
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyV1Workspace();
   });
 
   it('should update workspace.json', async () => {

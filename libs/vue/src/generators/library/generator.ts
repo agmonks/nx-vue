@@ -129,7 +129,6 @@ export async function libraryGenerator(
       ...(options.isVue3 ? { '@vue/compiler-sfc': '^3.0.0' } : {}),
       '@vue/eslint-config-typescript': '^5.0.2',
       'eslint-plugin-vue': '^7.8.0',
-      ...(!options.isVue3 ? { 'vue-template-compiler': '^2.6.11' } : {}),
     }
   );
 

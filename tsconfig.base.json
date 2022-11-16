@@ -18,8 +18,10 @@
     "strictPropertyInitialization": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "allowJs": true,
     "sourceMap": true,
-    "declaration": false,
+    "declaration": true,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -31,7 +33,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "types": ["webpack-env"],
     "paths": {
+      "@/*": ["apps/*"],
       "@nx-plus/docusaurus": ["libs/docusaurus/src/index.ts"],
       "@nx-plus/nuxt": ["libs/nuxt/src/index.ts"],
       "@nx-plus/shared/testing": ["libs/shared/testing/src/index.ts"],
@@ -39,5 +43,15 @@
       "@nx-plus/vue": ["libs/vue/src/index.ts"]
     }
   },
+  "include": [
+    "apps/**/src/**/*.ts",
+    "apps/**/src/**/*.tsx",
+    "apps/**/src/**/*.vue",
+    "libs/**/src/**/*.ts",
+    "libs/**/src/**/*.tsx",
+    "libs/**/src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx"
+  ],
   "exclude": ["node_modules", "tmp"]
 }

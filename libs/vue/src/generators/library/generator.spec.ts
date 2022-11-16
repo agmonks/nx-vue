@@ -1,5 +1,5 @@
 import { readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { createTreeWithEmptyV1Workspace } from '@nrwl/devkit/testing';
 import { libraryGenerator } from './generator';
 import { LibraryGeneratorSchema } from './schema';
 import { getEslintConfigWithOffset } from '../application/generator.spec';
@@ -20,7 +20,7 @@ describe('library schematic', () => {
   const treeRead = (path: string) => appTree.read(path, 'utf-8') || '';
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    appTree = createTreeWithEmptyV1Workspace();
   });
 
   it('should update workspace.json and tsconfig.base.json', async () => {
