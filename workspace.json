@@ -1,9 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "nuxt": "libs/nuxt",
-    "shared-testing": "libs/shared/testing",
-    "vite": "libs/vite",
     "vue": "libs/vue"
   },
   "$schema": "./node_modules/nx/schemas/workspace-schema.json"
