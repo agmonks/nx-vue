@@ -1,5 +1,5 @@
 import { names, readJson, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { createTreeWithEmptyV1Workspace } from '@nrwl/devkit/testing';
 import { applicationGenerator } from '../application/generator';
 import { options as _appOptions } from '../application/generator.spec';
 import { libraryGenerator } from '../library/generator';
@@ -18,7 +18,7 @@ describe('component schematic', () => {
 
   describe('for app', () => {
     beforeEach(async () => {
-      appTree = createTreeWithEmptyWorkspace();
+      appTree = createTreeWithEmptyV1Workspace();
       await applicationGenerator(appTree, appOptions);
     });
 
@@ -74,7 +74,7 @@ describe('component schematic', () => {
 
   describe('for library', () => {
     beforeEach(async () => {
-      appTree = createTreeWithEmptyWorkspace();
+      appTree = createTreeWithEmptyV1Workspace();
       await libraryGenerator(appTree, libOptions);
     });
 
