@@ -68,7 +68,7 @@
       "description": "Generate routing configuration",
       "x-prompt": "Would you like to configure routing for this application?",
       "default": false
-    }
+    },
     "skipFormat": {
       "type": "boolean",
       "description": "Skip formatting files",
