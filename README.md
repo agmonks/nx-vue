@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Node.js CI](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml/badge.svg)](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml)
+
 # Nx Vue
 
 An nx plugin to add vue support to your workspace. This plugin is based off @nx-plus/vue, however updated to add new features are drop others to keep the plugin as simple as possible.
