@@ -1,12 +1,9 @@
-import <% if (isVue3) { %>{ createApp }<% } else { %>Vue<% } %> from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';<% if (routing) { %>
-import router from './router';<% } %><% if (!isVue3) { %>
+import router from './router';<% } %>
 
-Vue.config.productionTip = false;<% } %>
+Vue.config.productionTip = false;
 
-<% if (isVue3) { %>createApp(App)<% if (routing) { %>
+createApp(App)<% if (routing) { %>
   .use(router)<% } %>
-  .mount('#app');<% } else { %>new Vue({<% if (routing) { %>
-  router,<% } %>
-  render: h => h(App)
-}).$mount('#app');<% } %>
+  .mount('#app');

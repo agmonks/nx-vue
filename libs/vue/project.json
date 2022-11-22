@@ -48,11 +48,6 @@
             "input": "./libs/vue",
             "glob": "executors.json",
             "output": "."
-          },
-          {
-            "input": "./libs/vue",
-            "glob": "patch-nx-dep-graph.js",
-            "output": "."
           }
         ],
         "srcRootForCompilationRoot": "libs/vue"

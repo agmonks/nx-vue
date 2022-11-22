@@ -7,8 +7,8 @@ import { options as _libraryOptions } from '../library/generator.spec';
 import { componentGenerator } from './generator';
 import { ComponentGeneratorSchema } from './schema';
 
-const appOptions = { ..._appOptions, vueVersion: 3 };
-const libOptions = { ..._libraryOptions, vueVersion: 3 };
+const appOptions = { ..._appOptions };
+const libOptions = { ..._libraryOptions };
 const styles = ['scss', 'stylus', 'less'] as const;
 
 const toClassName = (name: string) => names(name).className;

@@ -6,6 +6,5 @@ export interface LibraryGeneratorSchema {
   tags?: string;
   unitTestRunner: 'jest' | 'none';
   publishable: boolean;
-  vueVersion: number;
   babel: boolean;
 }

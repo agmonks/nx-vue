@@ -15,7 +15,7 @@ import {
   addBabel,
   addEsLint,
   addJest,
-  addPostInstall,
+  ensureGraphPluginSetup,
   NormalizedVueSchema,
   normalizeVueOptions,
 } from '../shared';
@@ -59,13 +59,11 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
       .forEach(({ path }) => tree.delete(path));
   }
 
-  if (options.isVue3) {
-    const { path } =
-      fileChanges.find(({ path }) => path.includes('/src/shims-tsx.d.ts')) ||
-      {};
-    if (path) {
-      tree.delete(path);
-    }
+  const fcPath = (
+    fileChanges.find(({ path }) => path.includes('/src/shims-tsx.d.ts')) || {}
+  ).path;
+  if (fcPath) {
+    tree.delete(fcPath);
   }
 }
 
@@ -83,7 +81,7 @@ async function addCypress(tree: Tree, options: NormalizedSchema) {
     js: false,
   });
 
-  const appSpecPath = options.projectRoot + '-e2e/src/integration/app.spec.ts';
+  const appSpecPath = options.projectRoot + '-e2e/src/e2e/app.cy.ts';
   tree.write(
     appSpecPath,
     `describe('${options.projectName}', () => {
@@ -110,7 +108,7 @@ export async function applicationGenerator(
     sourceRoot: `${options.projectRoot}/src`,
     targets: {
       build: {
-        executor: '@nx-vue/vue:browser',
+        executor: 'nx-vue:browser',
         options: {
           dest: `dist/${options.projectRoot}`,
           index: `${options.projectRoot}/public/index.html`,
@@ -130,7 +128,7 @@ export async function applicationGenerator(
         },
       },
       serve: {
-        executor: '@nx-vue/vue:dev-server',
+        executor: 'nx-vue:dev-server',
         options: {
           browserTarget: `${options.projectName}:build`,
         },
@@ -159,21 +157,17 @@ export async function applicationGenerator(
   const installTask = addDependenciesToPackageJson(
     tree,
     {
-      vue: options.isVue3 ? '^3.0.0' : '^2.6.11',
-      ...(options.routing
-        ? { 'vue-router': options.isVue3 ? '^4.0.0-0' : '^3.2.0' }
-        : {}),
+      vue: '^3.0.0',
+      ...(options.routing ? { 'vue-router': '^4.0.0-0' } : {}),
     },
     {
       '@vue/cli-plugin-typescript': '~4.5.0',
       '@vue/cli-service': '~4.5.0',
-      ...(options.isVue3 ? { '@vue/compiler-sfc': '^3.0.0' } : {}),
+      ...{ '@vue/compiler-sfc': '^3.0.0' },
       '@vue/eslint-config-typescript': '^5.0.2',
       'eslint-plugin-vue': '^7.8.0',
     }
   );
-
-  addPostInstall(tree);
 
   if (!options.skipFormat) {
     await formatFiles(tree);
@@ -184,7 +178,8 @@ export async function applicationGenerator(
     ...cypressTasks,
     ...jestTasks,
     ...babelTasks,
-    installTask
+    installTask,
+    ensureGraphPluginSetup(tree)
   );
 }
 

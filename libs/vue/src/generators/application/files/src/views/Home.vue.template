@@ -6,10 +6,10 @@
 </template>
 
 <script>
-import <% if (isVue3) { %>{ defineComponent }<% } else { %>Vue<% } %> from 'vue';
+import { defineComponent } from 'vue';
 import HelloWorld from '../components/HelloWorld.vue';
 
-export default <% if (isVue3) { %>defineComponent<% } else { %>Vue.extend<% } %>({
+export default defineComponent({
   name: 'Home',
   components: {
     HelloWorld

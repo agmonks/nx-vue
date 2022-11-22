@@ -1,9 +1,11 @@
 import {
   addDependenciesToPackageJson,
+  GeneratorCallback,
   getWorkspaceLayout,
   logger,
   names,
   offsetFromRoot,
+  readJson,
   Tree,
   updateJson,
 } from '@nrwl/devkit';
@@ -16,7 +18,6 @@ export type NormalizedVueSchema<T> = {
   projectRoot: string;
   projectDirectory: string;
   parsedTags: string[];
-  isVue3: boolean;
 } & T;
 
 export function normalizeVueOptions<
@@ -36,7 +37,6 @@ export function normalizeVueOptions<
   const parsedTags = schema.tags
     ? schema.tags.split(',').map((s) => s.trim())
     : [];
-  const isVue3 = schema.vueVersion === 3;
 
   return {
     ...schema,
@@ -45,13 +45,26 @@ export function normalizeVueOptions<
     projectRoot,
     projectDirectory,
     parsedTags,
-    isVue3,
   };
 }
 
 type Options = NormalizedVueSchema<
   ApplicationGeneratorSchema | LibraryGeneratorSchema
 >;
+
+export function ensureGraphPluginSetup(tree: Tree): GeneratorCallback {
+  updateJson(tree, './nx.json', (json) => {
+    logger.fatal('HERE1', json);
+    json.plugins = json.plugins || [];
+    if (!json.plugins.includes('nx-vue')) {
+      json.plugins.push('nx-vue');
+    }
+    logger.fatal('HERE2', json);
+    return json;
+  });
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  return () => {};
+}
 
 export async function addJest(tree: Tree, options: Options) {
   const { jestProjectGenerator, jestInitGenerator } = await import(
@@ -82,7 +95,7 @@ export async function addJest(tree: Tree, options: Options) {
   displayName: '${options.projectName}',
   preset: '${offsetFromRoot(options.projectRoot)}jest.preset.js',
   transform: {
-    '^.+\\.vue$': '${options.isVue3 ? 'vue3-jest' : '@vue/vue2-jest'}',
+    '^.+\\.vue$': '@vue/vue3-jest',
     '.+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$':
       'jest-transform-stub',
     '^.+\\.tsx?$': 'ts-jest',
@@ -118,16 +131,13 @@ export async function addJest(tree: Tree, options: Options) {
     tree,
     {},
     {
-      ...(options.isVue3
-        ? { '@vue/test-utils': '^2.0.0-0' }
-        : { '@vue/test-utils': '^1.1.3' }),
       'jest-serializer-vue': '^2.0.2',
       'jest-transform-stub': '^2.0.0',
-      ...(options.isVue3
-        ? { 'vue3-jest': '^27.0.0-alpha.1' }
-        : { '@vue/vue2-jest': '^27.0.0-alpha.1' }),
+      '@vue/vue3-jest': '^29.0.0',
+      '@vue/test-utils': '^2.0.0-0',
     }
   );
+
   return [jestInitTask, jestTask, installTask];
 }
 
@@ -136,7 +146,7 @@ function getEslintConfig(options: Options) {
   const eslintConfig: any = {
     extends: [
       `${offsetFromRoot(options.projectRoot)}.eslintrc.json`,
-      `plugin:vue/${options.isVue3 ? 'vue3-' : ''}essential`,
+      `plugin:vue/vue3-essential`,
       '@vue/typescript/recommended',
       'prettier',
     ],
@@ -186,24 +196,6 @@ export async function addEsLint(tree: Tree, options: Options) {
   );
 
   return [lintTask, installTask];
-}
-
-export function addPostInstall(tree: Tree) {
-  return updateJson(tree, 'package.json', (json) => {
-    const vuePostInstall =
-      'node node_modules/@nx-vue/vue/patch-nx-dep-graph.js';
-    const { postinstall } = json.scripts || {};
-    if (postinstall) {
-      if (postinstall !== vuePostInstall) {
-        logger.warn(
-          "We couldn't add our postinstall script. Without it Nx's dependency graph won't support Vue files. For more information see https://github.com/ZachJW34/nx-plus/tree/master/libs/vue#nx-dependency-graph-support"
-        );
-      }
-      return json;
-    }
-    json.scripts = { ...json.scripts, postinstall: vuePostInstall };
-    return json;
-  });
 }
 
 export async function addBabel(tree: Tree, options: Options) {

@@ -3,9 +3,9 @@
 </template>
 
 <script lang="ts">
-import <% if (isVue3) { %>{ defineComponent }<% } else { %>Vue<% } %> from 'vue';
+import { defineComponent } from 'vue';
 
-export default <% if (isVue3) { %>defineComponent<% } else { %>Vue.extend<% } %>({
+export default defineComponent({
   name: 'HelloWorld',
 });
 </script>

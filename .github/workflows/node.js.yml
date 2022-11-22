@@ -29,3 +29,4 @@ jobs:
     - run: yarn
     - run: yarn nx run-many --target build --all
     - run: yarn nx run-many --target test --all -u
+    - run: yarn nx run-many --target e2e --all

@@ -9,7 +9,6 @@ export const options: ApplicationGeneratorSchema = {
   e2eTestRunner: 'cypress',
   routing: false,
   style: 'css',
-  vueVersion: 2,
   skipFormat: false,
   babel: false,
 };
@@ -121,14 +120,6 @@ a {
     expect(tsConfigJson.references[1]).toEqual({
       path: './tsconfig.spec.json',
     });
-  });
-
-  it('should add postinstall script', async () => {
-    await applicationGenerator(appTree, options);
-
-    expect(readJson(appTree, 'package.json').scripts.postinstall).toBe(
-      'node node_modules/@nx-vue/vue/patch-nx-dep-graph.js'
-    );
   });
 
   describe('--style', () => {

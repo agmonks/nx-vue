@@ -6,7 +6,6 @@ export interface ApplicationGeneratorSchema {
   unitTestRunner: 'jest' | 'none';
   e2eTestRunner: 'cypress' | 'none';
   routing: boolean;
-  vueVersion: number;
   skipFormat: boolean;
   babel: boolean;
 }

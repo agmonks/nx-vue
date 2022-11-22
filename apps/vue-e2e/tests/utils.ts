@@ -1,7 +1,36 @@
 import { tags } from '@angular-devkit/core';
 import { checkFilesExist, tmpProjPath } from '@nrwl/nx-plugin/testing';
 import * as cp from 'child_process';
-import { runNxCommandAsyncStripped } from '@nx-vue/shared/testing';
+import { runNxCommandAsync } from '@nrwl/nx-plugin/testing';
+//import stripAnsi from 'strip-ansi';
+
+function ansiRegex({ onlyFirst = false } = {}) {
+  const pattern = [
+    '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]+)*|[a-zA-Z\\d]+(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+    '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]))',
+  ].join('|');
+
+  return new RegExp(pattern, onlyFirst ? undefined : 'g');
+}
+
+function stripAnsi(string: string) {
+  if (typeof string !== 'string') {
+    throw new TypeError(`Expected a \`string\`, got \`${typeof string}\``);
+  }
+
+  return string.replace(ansiRegex(), '');
+}
+
+export async function runNxCommandAsyncStripped(
+  ...args: Parameters<typeof runNxCommandAsync>
+): ReturnType<typeof runNxCommandAsync> {
+  const { stdout, stderr } = await runNxCommandAsync(...args);
+
+  return {
+    stdout: stripAnsi(stdout),
+    stderr: stripAnsi(stderr),
+  };
+}
 
 export async function testGeneratedApp(
   appName: string,

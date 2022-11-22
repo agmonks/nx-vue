@@ -109,8 +109,5 @@
       "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/.eslintrc.json"
     ]
-  },
-  "cli": {
-    "defaultCollection": "@nxext/vite"
   }
 }

@@ -9,7 +9,6 @@ export const options: LibraryGeneratorSchema = {
   unitTestRunner: 'jest',
   skipFormat: false,
   publishable: false,
-  vueVersion: 2,
   skipTsConfig: false,
   babel: false,
 };

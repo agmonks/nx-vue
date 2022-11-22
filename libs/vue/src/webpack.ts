@@ -36,7 +36,6 @@ export function modifyTsConfigPaths(
 ): void {
   const tsConfigPath = path.join(context.root, options.tsConfig);
   const vue = loadModule('vue', context.root);
-  const isVue3orVue2_7 = semver.satisfies(vue.version, '>=2.7.0');
 
   config.module
     .rule('ts')
@@ -53,12 +52,7 @@ export function modifyTsConfigPaths(
       return loaderOptions;
     });
   config.plugin('fork-ts-checker').tap((args: ANY) => {
-    if (isVue3orVue2_7) {
-      args[0].typescript.configFile = tsConfigPath;
-    } else {
-      args[0].tsconfig = tsConfigPath;
-    }
-    return args;
+    args[0].typescript.configFile = tsConfigPath;
   });
 }
 

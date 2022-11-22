@@ -1,10 +1,8 @@
-<% if (!isVue3) { %>import Vue from 'vue';<% } %>
-import <% if (isVue3) { %>{ createRouter, createWebHistory, RouteRecordRaw }<% } else { %>VueRouter, { RouteConfig }<% } %> from 'vue-router';
-import Home from '../views/Home.vue';<% if (!isVue3) { %>
 
-Vue.use(VueRouter);<% } %>
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
+import Home from '../views/Home.vue';
 
-const routes: Array<<% if (isVue3) { %>RouteRecordRaw<% } else { %>RouteConfig<% } %>> = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Home',
@@ -21,13 +19,9 @@ const routes: Array<<% if (isVue3) { %>RouteRecordRaw<% } else { %>RouteConfig<%
   }
 ];
 
-const router = <% if (isVue3) { %>createRouter({
+const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-});<% } else { %>new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-});<% } %>
+});
 
 export default router;

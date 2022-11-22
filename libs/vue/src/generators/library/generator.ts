@@ -15,7 +15,7 @@ import {
   addBabel,
   addEsLint,
   addJest,
-  addPostInstall,
+  ensureGraphPluginSetup,
   NormalizedVueSchema,
   normalizeVueOptions,
 } from '../shared';
@@ -45,7 +45,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
       (options.unitTestRunner === 'none' &&
         path.includes('/tests/unit/example.spec.ts')) ||
       (!options.publishable && path.includes('/configure-webpack.js')) ||
-      (options.isVue3 && path.includes('/src/shims-tsx.d.ts'));
+      path.includes('/src/shims-tsx.d.ts');
 
     if (shouldDelete) {
       tree.delete(path);
@@ -104,7 +104,6 @@ export async function libraryGenerator(
   });
 
   addFiles(tree, options);
-  addPostInstall(tree);
 
   if (!options.skipTsConfig) {
     updateTsConfig(tree, options);
@@ -121,12 +120,12 @@ export async function libraryGenerator(
   const installTask = addDependenciesToPackageJson(
     tree,
     {
-      vue: options.isVue3 ? '^3.0.0' : '^2.6.11',
+      vue: '^3.0.0',
     },
     {
       '@vue/cli-plugin-typescript': '~4.5.0',
       '@vue/cli-service': '~4.5.0',
-      ...(options.isVue3 ? { '@vue/compiler-sfc': '^3.0.0' } : {}),
+      '@vue/compiler-sfc': '^3.0.0',
       '@vue/eslint-config-typescript': '^5.0.2',
       'eslint-plugin-vue': '^7.8.0',
     }
@@ -140,7 +139,8 @@ export async function libraryGenerator(
     ...lintTasks,
     ...jestTasks,
     ...babelTasks,
-    installTask
+    installTask,
+    ensureGraphPluginSetup(tree)
   );
 }
 
