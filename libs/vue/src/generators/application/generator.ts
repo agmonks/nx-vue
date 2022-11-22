@@ -10,7 +10,6 @@ import {
 } from '@nrwl/devkit';
 import { runTasksInSerial } from '@nrwl/workspace/src/utilities/run-tasks-in-serial';
 import * as path from 'path';
-import { checkPeerDeps } from '../../utils';
 import {
   addBabel,
   addEsLint,
@@ -100,7 +99,6 @@ export async function applicationGenerator(
   tree: Tree,
   schema: ApplicationGeneratorSchema
 ) {
-  checkPeerDeps(schema);
   const options = normalizeVueOptions(tree, schema, 'application');
   addProjectConfiguration(tree, options.projectName, {
     root: options.projectRoot,

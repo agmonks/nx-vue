@@ -1,5 +1,5 @@
 {
-  "name": "@nx-vue/vue",
+  "name": "nx-vue",
   "version": "14.1.0",
   "main": "src/index.js",
   "generators": "./generators.json",

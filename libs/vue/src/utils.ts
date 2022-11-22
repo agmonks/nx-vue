@@ -116,36 +116,6 @@ function clearRequireCache(id: string, map = new Map()) {
   }
 }
 
-export function checkPeerDeps(options: ApplicationGeneratorSchema): void {
-  const expectedVersion = '^14.0.0';
-  const unmetPeerDeps = [
-    ...(options.e2eTestRunner === 'cypress' ? ['@nrwl/cypress'] : []),
-    ...(options.unitTestRunner === 'jest' ? ['@nrwl/jest'] : []),
-    '@nrwl/linter',
-    '@nrwl/workspace',
-  ].filter((dep) => {
-    try {
-      const { version } = loadModule(`${dep}/package.json`, appRootPath, true);
-      return !semver.satisfies(version, expectedVersion);
-    } catch (err) {
-      return true;
-    }
-  });
-
-  if (unmetPeerDeps.length) {
-    logger.warn(`
-You have the following unmet peer dependencies:
-
-${unmetPeerDeps
-  .map((dep) => `${dep}@${expectedVersion}\n`)
-  .join()
-  .split(',')
-  .join('')}
-@nx-vue/vite may not work as expected.
-    `);
-  }
-}
-
 export async function getBabelConfig(
   projectRoot: string
 ): Promise<string | null> {

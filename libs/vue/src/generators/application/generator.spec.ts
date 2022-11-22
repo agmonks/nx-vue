@@ -29,7 +29,7 @@ describe('application schematic', () => {
 
     expect(config.root).toBe('apps/my-app');
     expect(config.sourceRoot).toBe('apps/my-app/src');
-    expect(config.targets?.build.executor).toBe('@nx-vue/vue:browser');
+    expect(config.targets?.build.executor).toBe('nx-vue:browser');
     expect(config.targets?.build.options).toEqual({
       dest: 'dist/apps/my-app',
       index: 'apps/my-app/public/index.html',
@@ -45,7 +45,7 @@ describe('application schematic', () => {
         sourceMap: false,
       },
     });
-    expect(config.targets?.serve.executor).toBe('@nx-vue/vue:dev-server');
+    expect(config.targets?.serve.executor).toBe('nx-vue:dev-server');
     expect(config.targets?.serve.options).toEqual({
       browserTarget: 'my-app:build',
     });
@@ -82,7 +82,7 @@ describe('application schematic', () => {
     const eslintConfig = JSON.parse(treeRead('apps/my-app/.eslintrc.json'));
     expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../'));
 
-    expect(treeRead('apps/my-app-e2e/src/integration/app.spec.ts')).toContain(
+    expect(treeRead('apps/my-app-e2e/src/e2e/app.cy.ts')).toContain(
       "'Welcome to Your Vue.js + TypeScript App'"
     );
 
@@ -242,11 +242,7 @@ a
 
       const main = treeRead('apps/my-app/src/main.ts');
       expect(main).toContain("import router from './router';");
-      expect(main).toContain(`
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app');`);
+      expect(main).toContain(`.use(router)`);
 
       expect(treeRead('apps/my-app/src/App.vue')).toContain(`
     <div id="nav">
@@ -350,9 +346,9 @@ new Vue({
       );
       expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../../'));
 
-      expect(
-        treeRead('apps/subdir/my-app-e2e/src/integration/app.spec.ts')
-      ).toContain("'Welcome to Your Vue.js + TypeScript App'");
+      expect(treeRead('apps/subdir/my-app-e2e/src/e2e/app.cy.ts')).toContain(
+        "'Welcome to Your Vue.js + TypeScript App'"
+      );
 
       const tsConfigJson = readJson(
         appTree,
@@ -428,7 +424,7 @@ new Vue({
       expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../'));
 
       expect(
-        treeRead('custom-apps-dir/my-app-e2e/src/integration/app.spec.ts')
+        treeRead('custom-apps-dir/my-app-e2e/src/e2e/app.cy.ts')
       ).toContain("'Welcome to Your Vue.js + TypeScript App'");
 
       const tsConfigJson = readJson(
@@ -446,7 +442,7 @@ export function getEslintConfigWithOffset(offset: string) {
   const config = {
     extends: [
       `${offset}.eslintrc.json`,
-      `plugin:vue/essential`,
+      `plugin:vue/vue3-essential`,
       '@vue/typescript/recommended',
       'prettier',
     ],

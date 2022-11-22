@@ -54,12 +54,10 @@ type Options = NormalizedVueSchema<
 
 export function ensureGraphPluginSetup(tree: Tree): GeneratorCallback {
   updateJson(tree, './nx.json', (json) => {
-    logger.fatal('HERE1', json);
     json.plugins = json.plugins || [];
     if (!json.plugins.includes('nx-vue')) {
       json.plugins.push('nx-vue');
     }
-    logger.fatal('HERE2', json);
     return json;
   });
   // eslint-disable-next-line @typescript-eslint/no-empty-function

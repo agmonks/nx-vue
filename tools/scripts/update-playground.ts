@@ -11,8 +11,8 @@ const publishableLibNames = getPublishableLibNames(workspaceConfig);
 
 execSync(`yarn nx run-many --target build --projects ${publishableLibNames}`);
 
-removeSync(tmpProjPath('node_modules/@nx-vue'));
+removeSync(tmpProjPath('node_modules/nx-vue'));
 
-copySync(`${workspaceRoot}/dist/libs`, tmpProjPath('node_modules/@nx-vue'));
+copySync(`${workspaceRoot}/dist/libs`, tmpProjPath('node_modules/nx-vue'));
 
 console.log('\nUpdate complete.');

@@ -91,7 +91,7 @@ export async function libraryGenerator(
     targets: options.publishable
       ? {
           build: {
-            executor: '@nx-vue/vue:library',
+            executor: 'nx-vue:library',
             options: {
               dest: `dist/${options.projectRoot}`,
               entry: `${options.projectRoot}/src/index.ts`,
