@@ -13,7 +13,6 @@ import {
 
 describe('app', () => {
   beforeAll(async () => {
-    await runNxCommandAsyncStripped('reset');
     cleanup();
     ensureNxProject('nx-vue', 'dist/libs/vue');
   });

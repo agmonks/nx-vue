@@ -9,7 +9,6 @@ import { runNxCommandAsyncStripped, testGeneratedApp } from './utils';
 
 describe('graph plugin', () => {
   beforeAll(async () => {
-    await runNxCommandAsyncStripped('reset');
     cleanup();
     ensureNxProject('nx-vue', 'dist/libs/vue');
   });
