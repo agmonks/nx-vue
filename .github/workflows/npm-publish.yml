@@ -29,6 +29,8 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      - run: yarn
+      - run: yarn nx run-many --target build --all
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
