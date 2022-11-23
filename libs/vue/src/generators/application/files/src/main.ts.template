@@ -1,9 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';<% if (routing) { %>
-import router from './router';<% } %>
+  import router from './router';<% } %>
 
-Vue.config.productionTip = false;
-
-createApp(App)<% if (routing) { %>
-  .use(router)<% } %>
-  .mount('#app');
+    createApp(App)<% if (routing) { %>
+      .use(router)<% } %>
+        .mount('#app');

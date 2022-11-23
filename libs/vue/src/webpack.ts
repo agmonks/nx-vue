@@ -53,6 +53,7 @@ export function modifyTsConfigPaths(
     });
   config.plugin('fork-ts-checker').tap((args: ANY) => {
     args[0].typescript.configFile = tsConfigPath;
+    return args;
   });
 }
 
