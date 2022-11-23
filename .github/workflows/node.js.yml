@@ -31,5 +31,6 @@ jobs:
     - run: yarn nx run-many --target test --all -u
     - name: Run e2e tests
       uses: cypress-io/github-action@v4.2.1
-      run: yarn nx run-many --target e2e --all
+      with:
+        start: yarn nx run-many --target e2e --all
 
