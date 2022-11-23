@@ -29,6 +29,7 @@ jobs:
     - run: yarn nx run-many --target test --all -u
 
   e2e:
+    
     runs-on: ubuntu-latest
 
     strategy:
@@ -44,7 +45,5 @@ jobs:
     - run: yarn
     - name: Run e2e tests
       uses: cypress-io/github-action@v4.2.1
-      with:
-        start: yarn nx run-many --target e2e --all
 
 
