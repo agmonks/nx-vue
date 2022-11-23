@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Node.js CI](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml/badge.svg)](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Node.js CI](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml/badge.svg)](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml) [![npm version](https://badge.fury.io/js/nx-vue.svg)](https://badge.fury.io/js/nx-vue)
 
 # Nx Vue
 
@@ -25,7 +25,7 @@ An nx plugin to add vue support to your workspace. This plugin is based off @nx-
 If you have not already, [create an Nx workspace](https://github.com/nrwl/nx#creating-an-nx-workspace) with the following:
 
 ```
-npx create-nx-workspace@^14.0.0
+npx create-nx-workspace@^15.2.0
 ```
 
 ### Peer Dependencies

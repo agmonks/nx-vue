@@ -29,14 +29,12 @@
     "workspace-generator": "nx workspace-generator"
   },
   "dependencies": {
-    "@nrwl/remix": "^14.7.0",
     "@nrwl/web": "15.2.0",
     "@vue/cli-service": "^5.0.8",
     "core-js": "^3.8.3",
     "vue": "^3.2.13",
     "vue-loader": "17.0.0",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0",
     "webpack": "5.72.1"
   },
   "devDependencies": {
