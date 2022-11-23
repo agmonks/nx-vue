@@ -18,10 +18,8 @@ import {
 } from '../../webpack';
 import { DevServerExecutorSchema } from './schema';
 
-import { Service } from '@vue/cli-service/lib/ServicePlugin';
-
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-
+const Service = require('@vue/cli-service/lib/Service');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { resolvePkg } = require('@vue/cli-shared-utils/lib/pkg');
 
