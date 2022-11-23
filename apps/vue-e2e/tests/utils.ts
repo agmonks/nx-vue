@@ -57,7 +57,9 @@ export async function testGeneratedApp(
   }
 
   if (options.e2e) {
-    const e2eResult = await runNxCommandAsyncStripped(`e2e ${appName}-e2e`);
+    const e2eResult = await runNxCommandAsyncStripped(`e2e ${appName}-e2e`, {
+      silenceError: true,
+    });
     expect(e2eResult.stdout).toContain('All specs passed!');
   }
 
