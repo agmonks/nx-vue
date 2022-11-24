@@ -34,9 +34,9 @@
     "@nrwl/workspace": "^14.3.6"
   },
   "dependencies": {
-    "@nrwl/devkit": "^14.3.6",
+    "@nrwl/devkit": "^15.0.0",
     "@vue/cli-shared-utils": "^5.0.8",
-    "copy-webpack-plugin": "^5.1.1",
+    "copy-webpack-plugin": "^11.0.0",
     "fs-extra": "^10.0.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
