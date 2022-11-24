@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Node.js CI](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml/badge.svg)](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml) [![npm version](https://badge.fury.io/js/nx-vue.svg)](https://badge.fury.io/js/nx-vue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![GitHub top language](https://img.shields.io/github/languages/top/agmonks/nx-vue) [![Node.js CI](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml/badge.svg)](https://github.com/agmonks/nx-vue/actions/workflows/node.js.yml) [![npm version](https://badge.fury.io/js/nx-vue.svg)](https://badge.fury.io/js/nx-vue)
 
 # Nx Vue
 

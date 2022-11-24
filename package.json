@@ -13,7 +13,6 @@
     "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
-    "create-playground": "ts-node tools/scripts/create-playground.ts",
     "dep-graph": "nx dep-graph",
     "e2e": "nx e2e",
     "format": "nx format:write",
@@ -25,7 +24,6 @@
     "start": "nx serve",
     "test": "nx test",
     "update": "nx migrate latest",
-    "update-playground": "ts-node tools/scripts/update-playground.ts",
     "workspace-generator": "nx workspace-generator"
   },
   "dependencies": {
