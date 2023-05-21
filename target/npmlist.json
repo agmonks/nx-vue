@@ -1,0 +1,13 @@
+{
+  "version": "1.0.0",
+  "name": "nx-vue",
+  "dependencies": {
+    "@nrwl/web": { "version": "15.2.0" },
+    "@vue/cli-service": { "version": "5.0.8" },
+    "core-js": { "version": "3.26.1" },
+    "vue-loader": { "version": "17.0.0" },
+    "vue-router": { "version": "4.1.6" },
+    "vue": { "version": "3.2.45" },
+    "webpack": { "version": "5.72.1" }
+  }
+}

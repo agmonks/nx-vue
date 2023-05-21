@@ -168,7 +168,7 @@ export async function processProjectGraph(
  */
 function findVueFilesRecursive(dir: string): string[] {
   const files = readdirSync(dir, { withFileTypes: true });
-  const result = [];
+  const result: string[] = [];
 
   for (let i = 0; i < files.length; i++) {
     // if a directory then recurse
