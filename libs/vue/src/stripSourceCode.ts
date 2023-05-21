@@ -1,9 +1,10 @@
 import type { Scanner } from 'typescript';
+import ts from 'typescript';
 
 let SyntaxKind;
 export function stripSourceCode(scanner: Scanner, contents: string): string {
   if (!SyntaxKind) {
-    SyntaxKind = require('typescript').SyntaxKind;
+    SyntaxKind = ts.SyntaxKind;
   }
 
   if (contents.indexOf('loadChildren') > -1) {
@@ -12,8 +13,8 @@ export function stripSourceCode(scanner: Scanner, contents: string): string {
 
   scanner.setText(contents);
   let token = scanner.scan();
-  const statements = [];
-  let start = null;
+  const statements: string[] = [];
+  let start: number | null = null;
   while (token !== SyntaxKind.EndOfFileToken) {
     const potentialStart = scanner.getStartPos();
     switch (token) {
