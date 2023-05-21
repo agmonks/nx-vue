@@ -7,8 +7,8 @@ import {
   names,
   offsetFromRoot,
   Tree,
+  runTasksInSerial,
 } from '@nx/devkit';
-import { runTasksInSerial } from '@nx/workspace/src/utilities/run-tasks-in-serial';
 import * as path from 'path';
 import {
   addBabel,
