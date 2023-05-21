@@ -4,7 +4,7 @@ import {
   ensureNxProject,
   uniq,
   updateFile,
-} from '@nrwl/nx-plugin/testing';
+} from '@nx/plugin/testing';
 import { runNxCommandAsyncStripped, testGeneratedApp } from './utils';
 
 describe('app', () => {

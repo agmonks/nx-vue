@@ -8,7 +8,7 @@ import {
   FileData,
   Hasher,
   logger,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { appendFileSync, readdirSync } from 'fs';
 import { TypeScriptImportLocator } from 'nx/src/project-graph/build-dependencies/typescript-import-locator';
 import {

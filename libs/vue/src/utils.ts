@@ -1,4 +1,4 @@
-import { ExecutorContext, logger } from '@nrwl/devkit';
+import { ExecutorContext, logger } from '@nx/devkit';
 import { constants as FS_CONSTANTS } from 'fs';
 import { access, readFile } from 'fs/promises';
 import * as path from 'path';

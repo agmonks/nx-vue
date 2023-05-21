@@ -34,10 +34,10 @@ If you have not already, install peer dependencies with the following:
 
 ```
 # npm
-npm install @nrwl/cypress@^14.0.0 @nrwl/jest@^14.0.0 @nrwl/linter@^14.0.0 --save-dev
+npm install @nx/cypress@^14.0.0 @nx/jest@^14.0.0 @nx/linter@^14.0.0 --save-dev
 
 # yarn
-yarn add @nrwl/cypress@^14.0.0 @nrwl/jest@^14.0.0 @nrwl/linter@^14.0.0 --dev
+yarn add @nx/cypress@^14.0.0 @nx/jest@^14.0.0 @nx/linter@^14.0.0 --dev
 ```
 
 ## Getting Started
@@ -210,19 +210,19 @@ nx serve my-app
 
 `nx lint <name> [options]`
 
-We use `@nrwl/linter` for linting, so the options are as documented [here](https://github.com/nrwl/nx/tree/master/packages/linter).
+We use `@nx/linter` for linting, so the options are as documented [here](https://github.com/nrwl/nx/tree/master/packages/linter).
 
 ### Unit Testing
 
 `nx test <name> [options]`
 
-We use `@nrwl/jest` for unit testing, so the options are as documented [here](https://github.com/nrwl/nx/tree/master/packages/jest).
+We use `@nx/jest` for unit testing, so the options are as documented [here](https://github.com/nrwl/nx/tree/master/packages/jest).
 
 ### E2E Testing
 
 `nx e2e <name> [options]`
 
-We use `@nrwl/cypress` for e2e testing, so the options are as documented [here](https://github.com/nrwl/nx/tree/master/packages/cypress).
+We use `@nx/cypress` for e2e testing, so the options are as documented [here](https://github.com/nrwl/nx/tree/master/packages/cypress).
 
 ## Modify the Webpack Configuration
 

@@ -27,13 +27,12 @@
   },
   "homepage": "https://github.com/agmonks/nx-vue",
   "peerDependencies": {
-    "@nrwl/cypress": "^14.3.6",
-    "@nrwl/jest": "^14.3.6",
-    "@nrwl/linter": "^14.3.6",
-    "@nrwl/workspace": "^14.3.6"
+    "@nx/workspace": "^14.3.6",
+    "@nx/cypress": "^14.3.6",
+    "@nx/linter": "^14.3.6",
+    "@nx/jest": "^14.3.6"
   },
   "dependencies": {
-    "@nrwl/devkit": "^15.0.0",
     "@vue/cli-shared-utils": "^5.0.8",
     "copy-webpack-plugin": "^11.0.0",
     "fs-extra": "^10.0.0",
@@ -46,7 +45,8 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "tsconfig-paths-webpack-plugin": "3.5.2",
-    "typescript": "4.5.4"
+    "typescript": "4.5.4",
+    "@nx/devkit": "^15.0.0"
   },
   "ng-update": {
     "migrations": "./migrations.json"

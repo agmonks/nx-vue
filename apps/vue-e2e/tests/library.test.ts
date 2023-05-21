@@ -4,7 +4,7 @@ import {
   cleanup,
   ensureNxProject,
   uniq,
-} from '@nrwl/nx-plugin/testing';
+} from '@nx/plugin/testing';
 import {
   runNxCommandAsyncStripped,
   runNxProdCommandAsync,

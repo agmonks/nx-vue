@@ -8,7 +8,7 @@ import {
   readJson,
   Tree,
   updateJson,
-} from '@nrwl/devkit';
+} from '@nx/devkit';
 import { ApplicationGeneratorSchema } from './application/schema';
 import { LibraryGeneratorSchema } from './library/schema';
 
@@ -65,9 +65,7 @@ export function ensureGraphPluginSetup(tree: Tree): GeneratorCallback {
 }
 
 export async function addJest(tree: Tree, options: Options) {
-  const { jestProjectGenerator, jestInitGenerator } = await import(
-    '@nrwl/jest'
-  );
+  const { jestProjectGenerator, jestInitGenerator } = await import('@nx/jest');
   const jestInitTask = await jestInitGenerator(tree, { babelJest: false });
   const jestTask = await jestProjectGenerator(tree, {
     project: options.projectName,
@@ -170,7 +168,7 @@ function getEslintConfig(options: Options) {
 }
 
 export async function addEsLint(tree: Tree, options: Options) {
-  const { lintProjectGenerator, Linter } = await import('@nrwl/linter');
+  const { lintProjectGenerator, Linter } = await import('@nx/linter');
   const lintTask = await lintProjectGenerator(tree, {
     linter: Linter.EsLint,
     project: options.projectName,
