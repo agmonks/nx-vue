@@ -33,6 +33,7 @@
         "packageJson": "libs/vue/package.json",
         "main": "libs/vue/src/index.ts",
         "assets": [
+          "README.md",
           "libs/vue/*.md",
           {
             "input": "./libs/vue/src",

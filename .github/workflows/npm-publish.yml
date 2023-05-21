@@ -31,7 +31,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: yarn
       - run: yarn nx run-many --target build --all
-      - run: cd ./dist/libs/vue
-      - run: npm publish
+      - run: cd ./dist/libs/vue && npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

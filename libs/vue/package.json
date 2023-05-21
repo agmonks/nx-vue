@@ -1,6 +1,6 @@
 {
   "name": "nx-vue",
-  "version": "14.1.0",
+  "version": "1.0.2",
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
@@ -12,7 +12,6 @@
   "keywords": [
     "nx",
     "vue",
-    "vuex",
     "jest",
     "cypress",
     "monorepo"
