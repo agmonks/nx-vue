@@ -3,31 +3,16 @@ import {
   ProjectGraph,
   ProjectGraphProcessorContext,
   ProjectGraphBuilder,
-  DependencyType,
-  ProjectFileMap,
   FileData,
-  Hasher,
   logger,
 } from '@nx/devkit';
-import { appendFileSync, readdirSync } from 'fs';
-import { TypeScriptImportLocator } from 'nx/src/project-graph/build-dependencies/typescript-import-locator';
-import {
-  createSourceFile,
-  ScriptTarget,
-  forEachChild,
-  isImportDeclaration,
-  isExportDeclaration,
-} from 'typescript';
+import { readdirSync } from 'fs';
+
 import { TypeScriptVueImportLocator } from './TypeScriptVueImportLocator';
+import { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-dependencies/target-project-locator';
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path');
-const defaultFileRead =
-  require('nx/src/project-graph/file-utils').defaultFileRead;
-const stripSourceCode =
-  require('nx/src/utils/strip-source-code').stripSourceCode;
-const TargetProjectLocator =
-  require('nx/src/utils/target-project-locator').TargetProjectLocator;
 
 function log(text: string) {
   logger.info(/*'test.txt',*/ text + '\n');
@@ -42,7 +27,7 @@ export async function processProjectGraph(
   if (Object.keys(filesToProcess).length == 0) {
     log('called with no files to process 1');
 
-    log(JSON.stringify(context.workspace.projects[0]));
+    log(JSON.stringify(context.projectsConfigurations.projects[0]));
     log('-------------------------------------------------');
 
     return graph;
@@ -57,7 +42,7 @@ export async function processProjectGraph(
 
   const targetProjectLocator = new TargetProjectLocator(
     graph.nodes,
-    graph.externalNodes
+    graph?.externalNodes || {}
   );
 
   //lock this thread for 5 seconds uisng set timeout and promise
@@ -78,7 +63,7 @@ export async function processProjectGraph(
     if (filesToProcess[source].length == 0) {
       log('Processing all files in project: ' + source);
       log('Project files: ' + JSON.stringify(context.fileMap[source]));
-      const projectRoot = context.workspace.projects[source].root;
+      const projectRoot = context.projectsConfigurations.projects[source].root;
 
       // find all .vue files recursively
       const vueFiles: FileData[] = findVueFilesRecursive(projectRoot).map(

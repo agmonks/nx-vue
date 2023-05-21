@@ -22,7 +22,7 @@ const Module = require('module');
 export function getProjectRoot(context: ExecutorContext) {
   return path.join(
     context.root,
-    context.workspace.projects[context.projectName || ''].root
+    context?.workspace?.projects[context.projectName || '']?.root || ''
   );
 }
 

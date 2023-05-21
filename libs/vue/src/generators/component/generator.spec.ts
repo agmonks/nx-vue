@@ -1,5 +1,5 @@
 import { names, readJson, readProjectConfiguration, Tree } from '@nx/devkit';
-import { createTreeWithEmptyV1Workspace } from '@nx/devkit/testing';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { applicationGenerator } from '../application/generator';
 import { options as _appOptions } from '../application/generator.spec';
 import { libraryGenerator } from '../library/generator';
@@ -18,7 +18,7 @@ describe('component schematic', () => {
 
   describe('for app', () => {
     beforeEach(async () => {
-      appTree = createTreeWithEmptyV1Workspace();
+      appTree = createTreeWithEmptyWorkspace();
       await applicationGenerator(appTree, appOptions);
     });
 
@@ -58,10 +58,9 @@ describe('component schematic', () => {
       it('should set directory when used', async () => {
         await componentGenerator(appTree, options);
 
-        const workspaceJson = readJson(appTree, 'workspace.json');
-        const projectRoot = workspaceJson.projects['my-app'].sourceRoot;
+        const { sourceRoot } = readProjectConfiguration(appTree, 'my-app');
 
-        const componentPath = `${projectRoot}/ui/${toClassName(
+        const componentPath = `${sourceRoot}/ui/${toClassName(
           options.name
         )}.vue`;
 
@@ -74,7 +73,7 @@ describe('component schematic', () => {
 
   describe('for library', () => {
     beforeEach(async () => {
-      appTree = createTreeWithEmptyV1Workspace();
+      appTree = createTreeWithEmptyWorkspace();
       await libraryGenerator(appTree, libOptions);
     });
 

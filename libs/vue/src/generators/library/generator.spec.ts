@@ -1,5 +1,5 @@
 import { readJson, readProjectConfiguration, Tree } from '@nx/devkit';
-import { createTreeWithEmptyV1Workspace } from '@nx/devkit/testing';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { libraryGenerator } from './generator';
 import { LibraryGeneratorSchema } from './schema';
 import { getEslintConfigWithOffset } from '../application/generator.spec';
@@ -19,7 +19,7 @@ describe('library schematic', () => {
   const treeRead = (path: string) => appTree.read(path, 'utf-8') || '';
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyV1Workspace();
+    appTree = createTreeWithEmptyWorkspace();
   });
 
   it('should update workspace.json and tsconfig.base.json', async () => {
@@ -27,14 +27,14 @@ describe('library schematic', () => {
 
     const config = readProjectConfiguration(appTree, 'my-lib');
 
-    expect(config.root).toBe('libs/my-lib');
-    expect(config.sourceRoot).toBe('libs/my-lib/src');
+    expect(config.root).toBe('my-lib');
+    expect(config.sourceRoot).toBe('./my-lib/src');
     expect(config.targets?.lint.executor).toBe('@nx/linter:eslint');
     expect(config.targets?.test.executor).toBe('@nx/jest:jest');
 
     const tsConfigBaseJson = readJson(appTree, 'tsconfig.base.json');
     expect(tsConfigBaseJson.compilerOptions.paths['@proj/my-lib']).toEqual([
-      'libs/my-lib/src/index.ts',
+      './my-lib/src/index.ts',
     ]);
   });
 
@@ -43,25 +43,25 @@ describe('library schematic', () => {
 
     /* TODO: fix this
     [
-      'libs/my-lib/tsconfig.spec.json',
-      'libs/my-lib/tsconfig.json',
-      'libs/my-lib/tsconfig.lib.json',
-      'libs/my-lib/jest.config.ts',
-      'libs/my-lib/.eslintrc.json',
-      'libs/my-lib/tests/unit/example.spec.ts',
-      'libs/my-lib/src/shims-tsx.d.ts',
-      'libs/my-lib/src/shims-vue.d.ts',
-      'libs/my-lib/src/index.ts',
-      'libs/my-lib/src/lib/HelloWorld.vue',
+      './my-lib/tsconfig.spec.json',
+      './my-lib/tsconfig.json',
+      './my-lib/tsconfig.lib.json',
+      './my-lib/jest.config.ts',
+      './my-lib/.eslintrc.json',
+      './my-lib/tests/unit/example.spec.ts',
+      './my-lib/src/shims-tsx.d.ts',
+      './my-lib/src/shims-vue.d.ts',
+      './my-lib/src/index.ts',
+      './my-lib/src/lib/HelloWorld.vue',
     ].forEach((path) => expect(appTree.exists(path)).toBeTruthy()); */
 
-    const tsconfigLibJson = readJson(appTree, 'libs/my-lib/tsconfig.lib.json');
+    const tsconfigLibJson = readJson(appTree, './my-lib/tsconfig.lib.json');
     expect(tsconfigLibJson.exclude).toEqual(['**/*.spec.ts', '**/*.spec.tsx']);
 
-    const eslintConfig = JSON.parse(treeRead('libs/my-lib/.eslintrc.json'));
-    expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../'));
+    const eslintConfig = JSON.parse(treeRead('./my-lib/.eslintrc.json'));
+    expect(eslintConfig).toEqual(getEslintConfigWithOffset('../'));
 
-    const tsConfigJson = readJson(appTree, 'libs/my-lib/tsconfig.json');
+    const tsConfigJson = readJson(appTree, './my-lib/tsconfig.json');
     expect(tsConfigJson.references[1]).toEqual({
       path: './tsconfig.spec.json',
     });
@@ -71,17 +71,20 @@ describe('library schematic', () => {
     it('should generate publishable configuration', async () => {
       await libraryGenerator(appTree, { ...options, publishable: true });
 
-      const workspaceJson = readJson(appTree, 'workspace.json');
-      const { build } = workspaceJson.projects['my-lib'].architect;
+      const config = readProjectConfiguration(appTree, 'my-lib');
 
-      expect(build.builder).toBe('nx-vue:library');
+      const build = config.targets?.build;
+
+      if (!build) throw new Error('build is undefined');
+
+      expect(build.executor).toBe('nx-vue:library');
       expect(build.options).toEqual({
-        dest: `dist/libs/my-lib`,
-        entry: `libs/my-lib/src/index.ts`,
-        tsConfig: `libs/my-lib/tsconfig.lib.json`,
+        dest: `dist/./my-lib`,
+        entry: `./my-lib/src/index.ts`,
+        tsConfig: `./my-lib/tsconfig.lib.json`,
       });
 
-      expect(JSON.parse(treeRead('libs/my-lib/package.json'))).toEqual({
+      expect(JSON.parse(treeRead('./my-lib/package.json'))).toEqual({
         name: '@proj/my-lib',
         version: '0.0.0',
       });
@@ -92,32 +95,27 @@ describe('library schematic', () => {
     it('should not generate test configuration', async () => {
       await libraryGenerator(appTree, { ...options, unitTestRunner: 'none' });
 
-      const workspaceJson = readJson(appTree, 'workspace.json');
+      const config = readProjectConfiguration(appTree, 'my-lib');
 
-      expect(workspaceJson.projects['my-lib'].architect.test).toBeUndefined();
+      expect(config.targets?.test).toBeUndefined();
 
       [
-        'libs/my-lib/tsconfig.spec.json',
-        'libs/my-lib/jest.config.ts',
-        'libs/my-lib/tests/unit/example.spec.ts',
+        './my-lib/tsconfig.spec.json',
+        './my-lib/jest.config.ts',
+        './my-lib/tests/unit/example.spec.ts',
       ].forEach((path) => expect(appTree.exists(path)).toBeFalsy());
 
-      const tsconfigLibJson = readJson(
-        appTree,
-        'libs/my-lib/tsconfig.lib.json'
-      );
+      const tsconfigLibJson = readJson(appTree, './my-lib/tsconfig.lib.json');
       expect(tsconfigLibJson.exclude).toBeUndefined();
 
-      const eslintConfig = JSON.parse(treeRead('libs/my-lib/.eslintrc.json'));
-      const expected = getEslintConfigWithOffset('../../');
+      const eslintConfig = JSON.parse(treeRead('./my-lib/.eslintrc.json'));
+      const expected = getEslintConfigWithOffset('../');
       delete expected.overrides;
       expect(eslintConfig).toEqual(expected);
 
-      expect(treeRead('libs/my-lib/.eslintrc.json')).not.toContain(
-        '"overrides":'
-      );
+      expect(treeRead('./my-lib/.eslintrc.json')).not.toContain('"overrides":');
 
-      const tsConfigJson = readJson(appTree, 'libs/my-lib/tsconfig.json');
+      const tsConfigJson = readJson(appTree, './my-lib/tsconfig.json');
       expect(tsConfigJson.references[1]).toBeUndefined();
     });
   });
@@ -126,13 +124,13 @@ describe('library schematic', () => {
     it('--should generate files', async () => {
       await libraryGenerator(appTree, { ...options, babel: true });
 
-      expect(appTree.exists('libs/my-lib/babel.config.js')).toBeTruthy();
+      expect(appTree.exists('./my-lib/babel.config.js')).toBeTruthy();
 
-      const jestConfig = treeRead('libs/my-lib/jest.config.ts');
+      const jestConfig = treeRead('./my-lib/jest.config.ts');
       expect(jestConfig).toContain(`
     'vue-jest': {
-      tsConfig: 'libs/my-lib/tsconfig.spec.json',
-      babelConfig: 'libs/my-lib/babel.config.js',
+      tsConfig: './my-lib/tsconfig.spec.json',
+      babelConfig: './my-lib/babel.config.js',
     },`);
     });
   });
@@ -147,18 +145,18 @@ describe('library schematic', () => {
 
       const config = readProjectConfiguration(appTree, 'subdir-my-lib');
       expect(config.targets?.build.options).toEqual({
-        dest: `dist/libs/subdir/my-lib`,
-        entry: `libs/subdir/my-lib/src/index.ts`,
-        tsConfig: `libs/subdir/my-lib/tsconfig.lib.json`,
+        dest: `dist/./subdir/my-lib`,
+        entry: `./subdir/my-lib/src/index.ts`,
+        tsConfig: `./subdir/my-lib/tsconfig.lib.json`,
       });
 
-      expect(config.root).toBe('libs/subdir/my-lib');
-      expect(config.sourceRoot).toBe('libs/subdir/my-lib/src');
+      expect(config.root).toBe('subdir/my-lib');
+      expect(config.sourceRoot).toBe('./subdir/my-lib/src');
 
       const tsConfigBaseJson = readJson(appTree, 'tsconfig.base.json');
       expect(
         tsConfigBaseJson.compilerOptions.paths['@proj/subdir/my-lib']
-      ).toEqual(['libs/subdir/my-lib/src/index.ts']);
+      ).toEqual(['./subdir/my-lib/src/index.ts']);
     });
 
     it('should generate files', async () => {
@@ -170,21 +168,21 @@ describe('library schematic', () => {
 
       /* TODO: fix this
       [
-        'libs/subdir/my-lib/tsconfig.spec.json',
-        'libs/subdir/my-lib/tsconfig.json',
-        'libs/subdir/my-lib/tsconfig.lib.json',
-        'libs/subdir/my-lib/jest.config.ts',
-        'libs/subdir/my-lib/.eslintrc.json',
-        'libs/subdir/my-lib/tests/unit/example.spec.ts',
-        'libs/subdir/my-lib/src/shims-tsx.d.ts',
-        'libs/subdir/my-lib/src/shims-vue.d.ts',
-        'libs/subdir/my-lib/src/index.ts',
-        'libs/subdir/my-lib/src/lib/HelloWorld.vue',
+        './subdir/my-lib/tsconfig.spec.json',
+        './subdir/my-lib/tsconfig.json',
+        './subdir/my-lib/tsconfig.lib.json',
+        './subdir/my-lib/jest.config.ts',
+        './subdir/my-lib/.eslintrc.json',
+        './subdir/my-lib/tests/unit/example.spec.ts',
+        './subdir/my-lib/src/shims-tsx.d.ts',
+        './subdir/my-lib/src/shims-vue.d.ts',
+        './subdir/my-lib/src/index.ts',
+        './subdir/my-lib/src/lib/HelloWorld.vue',
       ].forEach((path) => expect(appTree.exists(path)).toBeTruthy());*/
 
       const tsconfigLibJson = readJson(
         appTree,
-        'libs/subdir/my-lib/tsconfig.lib.json'
+        './subdir/my-lib/tsconfig.lib.json'
       );
       expect(tsconfigLibJson.exclude).toEqual([
         '**/*.spec.ts',
@@ -192,19 +190,16 @@ describe('library schematic', () => {
       ]);
 
       const eslintConfig = JSON.parse(
-        treeRead('libs/subdir/my-lib/.eslintrc.json')
+        treeRead('./subdir/my-lib/.eslintrc.json')
       );
-      expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../../'));
+      expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../'));
 
-      expect(JSON.parse(treeRead('libs/subdir/my-lib/package.json'))).toEqual({
+      expect(JSON.parse(treeRead('./subdir/my-lib/package.json'))).toEqual({
         name: '@proj/my-lib',
         version: '0.0.0',
       });
 
-      const tsConfigJson = readJson(
-        appTree,
-        'libs/subdir/my-lib/tsconfig.json'
-      );
+      const tsConfigJson = readJson(appTree, './subdir/my-lib/tsconfig.json');
       expect(tsConfigJson.references[1]).toEqual({
         path: './tsconfig.spec.json',
       });
@@ -224,20 +219,20 @@ describe('library schematic', () => {
     it('should update workspace.json and tsconfig.base.json', async () => {
       await libraryGenerator(appTree, { ...options, publishable: true });
 
-      const workspaceJson = readJson(appTree, 'workspace.json');
-      const { build } = workspaceJson.projects['my-lib'].architect;
-      expect(build.options).toEqual({
+      const config = readProjectConfiguration(appTree, 'my-lib');
+
+      const build = config.targets?.build;
+
+      expect(build).toBeDefined();
+
+      expect(build?.options).toEqual({
         dest: `dist/custom-libs-dir/my-lib`,
         entry: `custom-libs-dir/my-lib/src/index.ts`,
         tsConfig: `custom-libs-dir/my-lib/tsconfig.lib.json`,
       });
 
-      expect(workspaceJson.projects['my-lib'].root).toBe(
-        'custom-libs-dir/my-lib'
-      );
-      expect(workspaceJson.projects['my-lib'].sourceRoot).toBe(
-        'custom-libs-dir/my-lib/src'
-      );
+      expect(config.root).toBe('custom-libs-dir/my-lib');
+      expect(config.sourceRoot).toBe('custom-libs-dir/my-lib/src');
 
       const tsConfigBaseJson = readJson(appTree, 'tsconfig.base.json');
       expect(tsConfigBaseJson.compilerOptions.paths['@proj/my-lib']).toEqual([
@@ -274,6 +269,7 @@ describe('library schematic', () => {
       const eslintConfig = JSON.parse(
         treeRead('custom-libs-dir/my-lib/.eslintrc.json')
       );
+
       expect(eslintConfig).toEqual(getEslintConfigWithOffset('../../'));
 
       expect(readJson(appTree, 'custom-libs-dir/my-lib/package.json')).toEqual({
