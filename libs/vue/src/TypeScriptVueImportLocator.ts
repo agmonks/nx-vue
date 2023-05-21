@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { stripSourceCode } from 'nx/src/utils/strip-source-code';
+import { stripSourceCode } from './stripSourceCode';
 import { DependencyType } from 'nx/src/config/project-graph';
 import { defaultFileRead } from 'nx/src/project-graph/file-utils';
 import {
