@@ -134,9 +134,9 @@ export async function processProjectGraph(
     //ensure the file is present in the nodes of the builder
 
     log(
-      `addDynamicDependency: ${r.sourceProjectName} -> ${r.targetProjectName} (${r.sourceProjectFile})`
+      `addStaticDependency: ${r.sourceProjectName} -> ${r.targetProjectName} (${r.sourceProjectFile})`
     );
-    builder.addDynamicDependency(
+    builder.addStaticDependency(
       r.sourceProjectName,
       r.targetProjectName,
       r.sourceProjectFile
