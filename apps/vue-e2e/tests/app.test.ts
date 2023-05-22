@@ -14,7 +14,7 @@ describe('app', () => {
   });
 
   afterAll(() => {
-    cleanup();
+    //cleanup();
   });
 
   it('should generate app', async () => {
