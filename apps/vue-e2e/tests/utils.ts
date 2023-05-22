@@ -102,19 +102,7 @@ export function runNxProdCommandAsync(command: string): Promise<{
   stdout: string;
   stderr: string;
 }> {
-  return new Promise((resolve, reject) => {
-    cp.exec(
-      `node ./node_modules/@nrwl/cli/bin/nx.js ${command}`,
-      {
-        cwd: tmpProjPath(),
-        env: { ...process.env, NODE_ENV: 'production' },
-      },
-      (err, stdout, stderr) => {
-        if (err) {
-          reject(err);
-        }
-        resolve({ stdout, stderr });
-      }
-    );
+  return runNxCommandAsync(command, {
+    env: { ...process.env, NODE_ENV: 'production' },
   });
 }
