@@ -5,6 +5,7 @@ import {
   uniq,
   updateFile,
 } from '@nx/plugin/testing';
+
 import { runNxCommandAsyncStripped, testGeneratedApp } from './utils';
 
 describe('graph plugin', () => {

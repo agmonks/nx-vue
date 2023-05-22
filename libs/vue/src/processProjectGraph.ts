@@ -6,6 +6,7 @@ import {
   FileData,
   logger,
 } from '@nx/devkit';
+
 import { readdirSync } from 'fs';
 
 import { TypeScriptVueImportLocator } from './TypeScriptVueImportLocator';
