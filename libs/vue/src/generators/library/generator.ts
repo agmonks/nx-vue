@@ -11,6 +11,7 @@ import {
   updateJson,
   runTasksInSerial,
 } from '@nx/devkit';
+import { getNpmScope } from '@nx/js/src/utils/package-json/get-npm-scope';
 
 import {
   addBabel,
@@ -20,6 +21,7 @@ import {
   NormalizedVueSchema,
   normalizeVueOptions,
 } from '../shared';
+
 import { LibraryGeneratorSchema } from './schema';
 import path = require('path');
 
@@ -55,7 +57,7 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
 }
 
 function addPublishable(tree: Tree, options: NormalizedSchema) {
-  const npmScope = readNxJson(tree)?.npmScope;
+  const npmScope = getNpmScope(tree);
 
   tree.write(
     `${options.projectRoot}/package.json`,
@@ -73,7 +75,7 @@ function updateTsConfig(tree: Tree, options: NormalizedSchema) {
     const c = json.compilerOptions;
     c.paths = c.paths || {};
     delete c.paths[options.name];
-    c.paths[`@${nxJson?.npmScope}/${options.projectDirectory}`] = [
+    c.paths[`@${getNpmScope(tree)}/${options.projectDirectory}`] = [
       `${options.projectRoot}/src/index.ts`,
     ];
     return json;
