@@ -15,7 +15,7 @@ import { TargetProjectLocator } from 'nx/src/plugins/js/project-graph/build-depe
 const path = require('path');
 
 function log(text: string) {
-  logger.info(/*'test.txt',*/ text + '\n');
+  logger.info(/*'test.txt',*/ '[nx-vue]:' + text + '\n');
 }
 
 export async function processProjectGraph(
@@ -27,7 +27,7 @@ export async function processProjectGraph(
   if (Object.keys(filesToProcess).length == 0) {
     log('called with no files to process 1');
 
-    log(JSON.stringify(context.projectsConfigurations.projects[0]));
+    // log(JSON.stringify(context.projectsConfigurations.projects[0]));
     log('-------------------------------------------------');
 
     return graph;
@@ -133,12 +133,12 @@ export async function processProjectGraph(
     //ensure the file is present in the nodes of the builder
 
     log(
-      `Adding explicit dependency: ${r.sourceProjectName} -> ${r.targetProjectName} (${r.sourceProjectFile})`
+      `addDynamicDependency: ${r.sourceProjectName} -> ${r.targetProjectName} (${r.sourceProjectFile})`
     );
-    builder.addExplicitDependency(
+    builder.addDynamicDependency(
       r.sourceProjectName,
-      r.sourceProjectFile,
-      r.targetProjectName
+      r.targetProjectName,
+      r.sourceProjectFile
     );
   }
 

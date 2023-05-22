@@ -23,7 +23,9 @@ describe('app', () => {
 
   it('should generate lib', async () => {
     const lib = uniq('lib');
-    await runNxCommandAsyncStripped(`generate nx-vue:lib ${lib}`);
+    await runNxCommandAsyncStripped(
+      `generate nx-vue:lib ${lib} --skipTsConfig=true`
+    );
 
     const lintResult = await runNxCommandAsyncStripped(`lint ${lib}`);
     expect(lintResult.stdout).toContain('All files pass linting.');
@@ -90,7 +92,9 @@ describe('app', () => {
 */
   it('should generate component', async () => {
     const libName = uniq('lib');
-    await runNxCommandAsyncStripped(`generate nx-vue:lib ${libName}`);
+    await runNxCommandAsyncStripped(
+      `generate nx-vue:lib ${libName} --skipTsConfig=true`
+    );
 
     await runNxCommandAsyncStripped(
       `generate nx-vue:component my-component --project ${libName}`

@@ -14,7 +14,7 @@ describe('graph plugin', () => {
   });
 
   afterAll(() => {
-    cleanup();
+    //cleanup();
   });
   it('Should use graph plugin to build dependencies from .vue files', async () => {
     const appName = uniq('app');
