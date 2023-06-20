@@ -117,7 +117,7 @@ export async function processProjectGraph(
   //ensure changed files are in the node of the graph
   for (const r of res) {
     if (
-      !graph.nodes[r.sourceProjectName].data.files.some(
+      !context.fileMap[r.sourceProjectName].data.files.some(
         (f: FileData) => f.file == r.sourceProjectFile
       )
     ) {
