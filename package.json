@@ -33,16 +33,16 @@
     "vue-loader": "17.0.0",
     "vue-router": "^4.0.3",
     "webpack": "5.72.1",
-    "@nx/web": "16.2.1"
+    "@nx/web": "16.3.2"
   },
   "devDependencies": {
     "@angular-devkit/schematics": "^15.0.0",
-    "@nrwl/js": "16.2.1",
-    "@nx/cypress": "16.2.1",
-    "@nx/devkit": "16.2.1",
-    "@nx/js": "16.2.1",
-    "@nx/linter": "16.2.1",
-    "@nx/workspace": "16.2.1",
+    "@nrwl/js": "16.3.2",
+    "@nx/cypress": "16.3.2",
+    "@nx/devkit": "16.3.2",
+    "@nx/js": "16.3.2",
+    "@nx/linter": "16.3.2",
+    "@nx/workspace": "16.3.2",
     "@swc-node/register": "^1.4.2",
     "@swc/core": "^1.2.173",
     "@types/fs-extra": "^9.0.13",
@@ -80,7 +80,7 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-serializer-vue": "^2.0.2",
     "jest-transform-stub": "^2.0.0",
-    "nx": "16.2.1",
+    "nx": "16.3.2",
     "prettier": "2.7.1",
     "pretty-quick": "^3.1.3",
     "semver": "^7.3.5",
@@ -90,10 +90,11 @@
     "tslib": "^2.3.0",
     "tslint": "6.1.3",
     "typescript": "5.0.4",
-    "@nx/eslint-plugin": "16.2.1",
-    "@nx/jest": "16.2.1",
-    "@nx/node": "16.2.1",
-    "@nx/plugin": "16.2.1"
+    "@nx/eslint-plugin": "16.3.2",
+    "@nx/jest": "16.3.2",
+    "@nx/node": "16.3.2",
+    "@nx/plugin": "16.3.2"
   },
   "license": "MIT"
 }
+
